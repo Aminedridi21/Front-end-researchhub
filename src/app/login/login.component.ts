@@ -13,7 +13,7 @@ export class LoginComponent  {
 
   constructor(private http:HttpClient,private router:Router,private auth:AuthentificationService,private apiService:ApiService){}
   adminForm = new FormGroup({
-    username: new FormControl(''),
+    email: new FormControl(''),
     password: new FormControl(''),
   })
   

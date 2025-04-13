@@ -7,6 +7,6 @@ export class ApiService {
 
   constructor(private http : HttpClient) {}
   user_login(LoginForm:any){
-    return this.http.post<any>("localhost:8090/api/auth/login",LoginForm);
+    return this.http.post<any>("http://localhost:8090/api/auth/login",LoginForm);
     }
 }
