@@ -1,1 +1,35 @@
-<p>users works!</p>
+<div class="table_div">
+    <h2 class="title">Listes des tickets annulées</h2>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>firstName</th>
+                <th>lastName</th>
+                <th>email</th>
+                
+                <th>employmentDate</th>
+                <th>originalEstablishment</th> 
+                <th>lastDiploma</th>
+                <th>grade</th>
+                <th>role</th>
+            </tr>
+    </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{user.id}}</td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.employmentDate}}</td>
+                <td>{{user.originalEstablishment}}</td>
+                <td>{{user.lastDiploma}}</td>
+                <td>{{user.grade}}</td>
+                <td>{{user.role}}</td>
+                <td>
+                    <button (click)="Modify_Ticket(ticket.id)" class="btn">Modifier</button>
+                </td>
+                </tr>
+        </tbody>   
+    </table>
+</div>
