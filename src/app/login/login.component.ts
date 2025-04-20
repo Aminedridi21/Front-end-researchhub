@@ -11,33 +11,31 @@ import { ApiService } from '../Services/api.service';
 })
 export class LoginComponent  {
 
-  constructor(private http:HttpClient,private routes:Router){}
+  constructor(private http:HttpClient,private apiService:ApiService,private routes:Router){}
    
     LoginForm = new FormGroup({
-      Username: new FormControl(''),
-      Password: new FormControl(''),
+      email: new FormControl(''),
+      password: new FormControl(''),
     })
 
 
-LogIn(profileForm:FormGroup) {
-  
-  this.http.get<any>("http://localhost:3000/users")
-   .subscribe(res=>{
-      const user =res.find((a:any)=>{
-      return a.Username===this.LoginForm.value.Username && a.Password === this.LoginForm.value.Password
-      });
-      if(user){
-        this.LoginForm.reset();
-        this.routes.navigate(['/dashbord']);
-
+LogIn(LoginForm:FormGroup) {
+  this.apiService.user_login(LoginForm).subscribe(
+    (response)=>{
+      console.log(response)
+      if(response!=null){
+        console.log('mawjoud fil base');
+        localStorage.setItem('token',response.token)
+        this.routes.navigate(['']);
       }
       else{
-        window.alert('Incorrect login credentials')
-        this.LoginForm.reset();
-      }
-   
-    });
-}    
+        console.log('mich mawjoud');
+        alert('Invalid credentials');
+        this.routes.navigate(['login']);
+        
+      }})
+    
+}
 };
 
 

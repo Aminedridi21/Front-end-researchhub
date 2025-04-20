@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from '../Services/api.service';
 
 @Component({
   selector: 'app-index',
@@ -9,9 +10,9 @@ import {ActivatedRoute, Router } from '@angular/router';
 })
 export class IndexComponent implements OnInit {
   menu: String ="admin";
-  tickets:any;
+  articles:any;
   receivedData: any;
-  constructor(private http:HttpClient,private router:Router,private route: ActivatedRoute) { }
+  constructor(private http:HttpClient,private router:Router,private apiService: ApiService,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -20,9 +21,9 @@ export class IndexComponent implements OnInit {
       console.log(this.receivedData)
     });
     
-     this.http.post("http://localhost:3000/get-pending-tickets",{ etat: 2 }).subscribe(
+     this.apiService.get_Article().subscribe(
       (response)=>{
-        this.tickets=response;})
+        this.articles=response;})
    
   }
   download(){

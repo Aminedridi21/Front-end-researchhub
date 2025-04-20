@@ -24,35 +24,20 @@
       </nav>
       
  <!--les cartes d'actualité -->
- <div class="container mt-4">
-  <div class="row">
-    <div class="col-md-4 mb-4" *ngFor="let myticket of tickets">
-      <div class="card" style="width: 100%;">
-        <div class="card-body">
-          <h5 class="card-title">Actualité {{myticket.id}}</h5>
-          <div class="card-text">
-            <label><b>Numéro : </b> {{myticket.id}}</label><br>
-            <label><b>Description : </b>{{myticket.description}}</label><br>
-            <label><b>État : </b> {{myticket.id_etat}}</label>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+ 
 
-<div class="card" *ngFor="let myticket of tickets">
+<div class="card" *ngFor="let article of articles">
   <img src="assets/images/login.png" alt="Image" class="card-img" />
   <div class="card-body">
     <h3 class="card-title">Titre de la carte</h3>
     <p class="card-text">
-      Ceci est un exemple de contenu pour une carte élégante et responsive.
-      <label><b>Numéro : </b> {{myticket.id}}</label><br>
-            <label><b>Description : </b>{{myticket.description}}</label><br>
-            <label><b>État : </b> {{myticket.id_etat}}</label>
+      <label><b>titre : </b> {{article.titre}}</label><br>
+            <label><b>Doi : </b>{{article.doi}}</label><br>
+            <label><b>mots clés : </b> {{article.motsCles}}</label>
     </p>
     <button class="card-btn">En savoir plus</button>
   </div>
 </div>
+<app-users></app-users>
 
   

@@ -12,13 +12,15 @@ import {MatIconModule} from '@angular/material/icon';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DataTablesModule } from 'angular-datatables';
+import { UsersComponent } from './users/users.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     IndexComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,7 @@ import { DataTablesModule } from 'angular-datatables';
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
-    DataTablesModule
+    
     ],
   providers: [],
   bootstrap: [AppComponent]
