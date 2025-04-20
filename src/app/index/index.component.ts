@@ -8,7 +8,7 @@ import {ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./index.component.css']
 })
 export class IndexComponent implements OnInit {
-  menu : String ="";
+  menu: String ="admin";
   tickets:any;
   receivedData: any;
   constructor(private http:HttpClient,private router:Router,private route: ActivatedRoute) { }

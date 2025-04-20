@@ -11,34 +11,34 @@ import { ApiService } from '../Services/api.service';
 })
 export class LoginComponent  {
 
-  constructor(private http:HttpClient,private router:Router,private auth:AuthentificationService,private apiService:ApiService){}
-  adminForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
-  })
+  constructor(private http:HttpClient,private routes:Router){}
+   
+    LoginForm = new FormGroup({
+      Username: new FormControl(''),
+      Password: new FormControl(''),
+    })
+
+
+LogIn(profileForm:FormGroup) {
   
-  
-  AdminLogin(LoginForm:FormGroup){
-    const username = LoginForm.value.username;
-    const password = parseInt(LoginForm.value.password);
-  //console.log(LoginForm.value);
-  this.apiService.user_login(LoginForm.value).subscribe(
-    (response)=>{
-      console.log(response)
-      if(response!=null){
-        console.log('mawjoud fil base');
-        localStorage.setItem('token',response.token)
-        this.router.navigate(['signup']);
+  this.http.get<any>("http://localhost:3000/users")
+   .subscribe(res=>{
+      const user =res.find((a:any)=>{
+      return a.Username===this.LoginForm.value.Username && a.Password === this.LoginForm.value.Password
+      });
+      if(user){
+        this.LoginForm.reset();
+        this.routes.navigate(['/dashbord']);
+
       }
       else{
-        console.log('mich mawjoud');
-        alert('Invalid credentials');
-        this.router.navigate(['']);
-        
+        window.alert('Incorrect login credentials')
+        this.LoginForm.reset();
       }
-    }
-  )
+   
+    });
+}    
 };
 
 
-}
+
