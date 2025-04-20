@@ -26,18 +26,25 @@
  <!--les cartes d'actualité -->
  
 
-<div class="card" *ngFor="let article of articles">
-  <img src="assets/images/login.png" alt="Image" class="card-img" />
-  <div class="card-body">
-    <h3 class="card-title">Titre de la carte</h3>
-    <p class="card-text">
-      <label><b>titre : </b> {{article.titre}}</label><br>
-            <label><b>Doi : </b>{{article.doi}}</label><br>
-            <label><b>mots clés : </b> {{article.motsCles}}</label>
-    </p>
-    <button class="card-btn">En savoir plus</button>
+ <div class="card-grid">
+  <div class="card" *ngFor="let article of articles">
+    <img src="assets/images/article.png" alt="Image" class="card-img" />
+    <div class="card-body">
+      <h3 class="card-title">{{article.titre}}</h3>
+      <p class="card-text">
+        <label><b>Doi : </b>{{article.doi}}</label><br />
+        <label><b>Mots clés : </b>{{article.motsCles}}</label>
+      </p>
+    </div>
+    <div class="card-footer">
+      <button class="card-btn left-btn">Download PDF</button>
+      <button class="card-btn right-btn">En savoir plus</button>
+    </div>
   </div>
 </div>
-<app-users></app-users>
+
+
+<button (click)="goToDashboard()">Go to Admin dashboard</button>
+
 
   

@@ -35,4 +35,7 @@ export class IndexComponent implements OnInit {
    Signup(){
     this.router.navigate(['signup']);
    }
+   goToDashboard() {
+    this.router.navigate(['dashboard']);
+  }
 }

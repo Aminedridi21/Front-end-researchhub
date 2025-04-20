@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +15,9 @@ export class ApiService {
 
   
   get_Users(){
-      return this.http.get("http://localhost:8090/api/user");
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Authorization': `Bearer ${token}`});
+    return this.http.get("http://localhost:8090/api/user",{headers});
   }
   get_Article(){
     return this.http.get("http://localhost:8090/api/articles");

@@ -19,9 +19,9 @@ export class UsersComponent {
   constructor(private http:HttpClient,private apiService: ApiService,private router:Router){
     
   }
-  //Modify_Ticket(value:any){
-   // this.router.navigate(['/espace-ticket'],{ queryParams: { id:value } });
-   // }
+  modifyUser(value:any){
+    this.router.navigate(['/espace-ticket'],{ queryParams: { id:value } });
+    }
 
     ngOnInit(){
       
