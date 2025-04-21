@@ -11,34 +11,33 @@ import { ApiService } from '../Services/api.service';
 })
 export class LoginComponent  {
 
-  constructor(private http:HttpClient,private router:Router,private auth:AuthentificationService,private apiService:ApiService){}
-  adminForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
-  })
-  
-  
-  AdminLogin(LoginForm:FormGroup){
-    const username = LoginForm.value.username;
-    const password = parseInt(LoginForm.value.password);
-  //console.log(LoginForm.value);
-  this.apiService.user_login(LoginForm.value).subscribe(
+  constructor(private http:HttpClient,private apiService:ApiService,private routes:Router){}
+   
+    LoginForm = new FormGroup({
+      email: new FormControl(''),
+      password: new FormControl(''),
+    })
+
+
+LogIn(LoginForm:FormGroup) {
+  console.log(LoginForm);
+  this.apiService.user_login(LoginForm).subscribe(
     (response)=>{
       console.log(response)
       if(response!=null){
         console.log('mawjoud fil base');
-        localStorage.setItem('token',response.token)
-        this.router.navigate(['signup']);
+        localStorage.setItem('token',response.accessToken)
+        this.routes.navigate(['']);
       }
       else{
         console.log('mich mawjoud');
         alert('Invalid credentials');
-        this.router.navigate(['']);
+        this.routes.navigate(['login']);
         
-      }
-    }
-  )
+      }})
+    
+}
 };
 
 
-}
+

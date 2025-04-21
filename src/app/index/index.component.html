@@ -1,50 +1,50 @@
-<!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
-    <!-- Contenu navbar -->
-    <div class="collapse navbar-collapse" id="navbarContent">
-      <!--menu admin ou chercheur-->
-      <div class="btn-group " *ngIf="menu === 'admin'">
-        <button type="button" class="btn bg-white border rounded" data-bs-toggle="dropdown" aria-expanded="false">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <ul class=" dropdown-menu ">
-          <li><button class="dropdown-item" type="button">Add Researcher</button></li>
-          <li><button class="dropdown-item" type="button">Another action</button></li>
-          <li><button class="dropdown-item" type="button">Something else here</button></li>
-        </ul>
-      </div>
-      <!--logo-->
-      <a class="navbar-brand ms-auto" href="#">🌐 Research hub</a>
-      <!-- Barre de recherche -->
-      <form class="d-flex w-50 mx-auto">
-        <input class="form-control me-2" type="search" placeholder="Rechercher..." aria-label="Search">
-        <button class="btn btn-outline-primary" type="submit">Search</button>
-      </form>
 
-      <!-- Boutons à droite -->
-      <div class="d-flex ms-auto">
-        <button class="btn btn-outline-secondary me-2" (click)="login()">Sign In</button>
-        <button class="btn btn-primary"(click)="Signup()">Sign Up</button>
-      </div>
-    </div>
-  </nav>
- <!--les cartes d'actualité -->
- <div class="container mt-4">
-  <div class="row">
-    <div class="col-md-4 mb-4" *ngFor="let myticket of tickets">
-      <div class="card" style="width: 100%;">
-        <div class="card-body">
-          <h5 class="card-title">Actualité {{myticket.id}}</h5>
-          <div class="card-text">
-            <label><b>Numéro : </b> {{myticket.id}}</label><br>
-            <label><b>Description : </b>{{myticket.description}}</label><br>
-            <label><b>État : </b> {{myticket.id_etat}}</label>
-          </div>
+      <!--menu admin ou chercheur-->
+    
+        
+      <nav class="navbar">
+        <div class="navbar-left">
+          <img src="/assets/logo.png" alt="Logo" class="logo" />
+          <input type="text" placeholder="Search..." class="search-bar" />
         </div>
-      </div>
+      
+        <div class="navbar-right">
+          <div class="dropdown" >
+            <button class="dropdown-btn">Menu ▼</button>
+            <ul class="dropdown-menu" *ngIf="menu === 'admin'">
+              <li><a href="#">Profil</a></li>
+              <li><a href="#">Paramètres</a></li>
+              <li><a href="#">Déconnexion</a></li>
+            </ul>
+          </div>
+      
+          <button class="btn sign-in" (click)="login()">Sign In</button>
+          <button class="btn sign-up" (click)="Signup()">Sign Up</button>
+        </div>
+      </nav>
+      
+ <!--les cartes d'actualité -->
+ 
+
+ <div class="card-grid">
+  <div class="card" *ngFor="let article of articles">
+    <img src="assets/images/article.png" alt="Image" class="card-img" />
+    <div class="card-body">
+      <h3 class="card-title">{{article.titre}}</h3>
+      <p class="card-text">
+        <label><b>Doi : </b>{{article.doi}}</label><br />
+        <label><b>Mots clés : </b>{{article.motsCles}}</label>
+      </p>
+    </div>
+    <div class="card-footer">
+      <button class="card-btn left-btn">Download PDF</button>
+      <button class="card-btn right-btn">En savoir plus</button>
     </div>
   </div>
 </div>
 
-  
+
+<button (click)="goToDashboard()">Go to Admin dashboard</button>
+
+
   

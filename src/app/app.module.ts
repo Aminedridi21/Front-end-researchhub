@@ -12,12 +12,19 @@ import {MatIconModule} from '@angular/material/icon';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UsersComponent } from './users/users.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MenuDashboardComponent } from './menu-dashboard/menu-dashboard.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     IndexComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    UsersComponent,
+    DashboardComponent,
+    MenuDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +35,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatMenuModule,
     MatButtonModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    
     ],
   providers: [],
   bootstrap: [AppComponent]
