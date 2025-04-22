@@ -30,9 +30,28 @@ export class IndexComponent implements OnInit {
       this.articles = response;
     });
   }
-  download() {
-    console.log('download');
+  download(article: any) {
+    const base64 = article.pdfDocument; // base64 string
+    const binaryString = atob(base64); // decode base64 to binary string
+
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i); // convert each char to byte
+    }
+
+    const blob = new Blob([bytes], {
+      type: article.documentType || 'application/pdf',
+    });
+
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = article.documentName || 'document.pdf';
+    a.click();
+    window.URL.revokeObjectURL(url);
   }
+
   login() {
     this.router.navigate(['login']);
   }
