@@ -19,6 +19,49 @@ export class IndexComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
+
+//login function
+  isLoggedIn = false;
+  username = '';
+//article
+  isAddingArticle: boolean = false; // Controls whether the form is visible or not
+
+  article = {
+    titre: '',
+    doi: '',
+    motsCles: '',
+    pdf: null,
+    domaine: ''
+  };
+  domaines = ['Nlp', 'IA', 'Cybersecurity', 'Deeplearning'];
+
+
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.article.pdf = file;
+    }
+  }
+
+  toggleAddArticle() {
+    this.isAddingArticle = !this.isAddingArticle;
+  }
+
+  addArticle(): void {
+    if (this.article.titre && this.article.doi && this.article.pdf && this.article.domaine) {
+      // Here you can send the article to the backend (API call) to save it
+
+      // Simulate article being added
+      this.articles.push({ ...this.article });
+
+      // Clear the form after submission
+      alert('Article ajouté avec succès!');
+    } else {
+      alert('Veuillez remplir tous les champs obligatoires.');
+    }
+  }
+
+
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.receivedData = params;
@@ -29,6 +72,25 @@ export class IndexComponent implements OnInit {
     this.apiService.get_Article().subscribe((response) => {
       this.articles = response;
     });
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.isLoggedIn = true;
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      this.username = user.firstName + user.lastName;
+    }
+  }
+
+  logout(): void {
+
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
+    this.isAddingArticle = false;
+    // If you stored any other user info, clear it here too
+    this.isLoggedIn = false;
+
+    this.router.navigate(['']);
   }
   download(article: any) {
     const base64 = article.pdfDocument; // base64 string
@@ -55,6 +117,10 @@ export class IndexComponent implements OnInit {
   login() {
     this.router.navigate(['login']);
   }
+  signup() {
+    this.router.navigate(['signup']);
+  }
+  
   Signup() {
     this.router.navigate(['signup']);
   }

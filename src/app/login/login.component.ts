@@ -27,6 +27,8 @@ LogIn(LoginForm:FormGroup) {
       if(response!=null){
         console.log('mawjoud fil base');
         localStorage.setItem('token',response.accessToken)
+        localStorage.setItem('user', JSON.stringify(response.user));
+
         this.routes.navigate(['']);
       }
       else{

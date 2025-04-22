@@ -156,3 +156,13 @@
   background-color: #1565c0;
 }
 
+.logo {
+  height: 40px;
+  width: auto;
+}
+
+.navbar .dropdown-menu {
+  min-width: 200px;
+}
+
+
