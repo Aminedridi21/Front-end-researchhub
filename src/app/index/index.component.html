@@ -1,24 +1,72 @@
 <!--menu admin ou chercheur-->
 
-<nav class="navbar">
-  <div class="navbar-left">
-    <img src="/assets/logo.png" alt="Logo" class="logo" />
-    <input type="text" placeholder="Search..." class="search-bar" />
-  </div>
+<nav
+  class="navbar navbar-expand-lg navbar-dark"
+  style="background-color: #003366"
+>
+  <div class="container-fluid">
+    <!-- Logo and Search Bar -->
+    <a class="navbar-brand" href="#">
+      <img src="/assets/logo.png" alt="Logo" class="logo" />
+    </a>
+    <form class="d-flex ms-auto">
+      <input
+        class="form-control me-2"
+        type="search"
+        placeholder="Search..."
+        aria-label="Search"
+      />
+    </form>
 
-  <div class="navbar-right">
-    <div class="dropdown">
-      <button class="dropdown-btn">Menu ▼</button>
-      <ul class="dropdown-menu" *ngIf="menu === 'admin'">
-        <li><a href="#">Profil</a></li>
-        <li><a href="#">Paramètres</a></li>
-        <li><a href="#">Déconnexion</a></li>
-        <li><button (click)="goToDashboard()">Admin dashboard</button></li>
-      </ul>
+    <!-- Navbar Toggler for Mobile -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Right-side Buttons and Dropdown Menu -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="navbar-nav ms-auto">
+        <div class="dropdown">
+          <button
+            class="btn btn-outline-light dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Menu
+          </button>
+          <ul
+            class="dropdown-menu"
+            aria-labelledby="dropdownMenuButton"
+            *ngIf="menu === 'admin'"
+          >
+            <li><a class="dropdown-item" href="#">Profil</a></li>
+            <li><a class="dropdown-item" href="#">Paramètres</a></li>
+            <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+            <li>
+              <button class="dropdown-item" (click)="goToDashboard()">
+                Admin dashboard
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Sign In / Sign Up Buttons -->
+        <button class="btn btn-primary ms-2" (click)="login()">Sign In</button>
+        <!--<button class="btn btn-secondary ms-2" (click)="Signup()">
+          Sign Up
+        </button>-->
+      </div>
     </div>
-
-    <button class="btn sign-in" (click)="login()">Sign In</button>
-    <button class="btn sign-up" (click)="Signup()">Sign Up</button>
   </div>
 </nav>
 
