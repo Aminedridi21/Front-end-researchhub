@@ -1,50 +1,43 @@
+<!--menu admin ou chercheur-->
 
-      <!--menu admin ou chercheur-->
-    
-        
-      <nav class="navbar">
-        <div class="navbar-left">
-          <img src="/assets/logo.png" alt="Logo" class="logo" />
-          <input type="text" placeholder="Search..." class="search-bar" />
-        </div>
-      
-        <div class="navbar-right">
-          <div class="dropdown" >
-            <button class="dropdown-btn">Menu ▼</button>
-            <ul class="dropdown-menu" *ngIf="menu === 'admin'">
-              <li><a href="#">Profil</a></li>
-              <li><a href="#">Paramètres</a></li>
-              <li><a href="#">Déconnexion</a></li>
-            </ul>
-          </div>
-      
-          <button class="btn sign-in" (click)="login()">Sign In</button>
-          <button class="btn sign-up" (click)="Signup()">Sign Up</button>
-        </div>
-      </nav>
-      
- <!--les cartes d'actualité -->
- 
+<nav class="navbar">
+  <div class="navbar-left">
+    <img src="/assets/logo.png" alt="Logo" class="logo" />
+    <input type="text" placeholder="Search..." class="search-bar" />
+  </div>
 
- <div class="card-grid">
+  <div class="navbar-right">
+    <div class="dropdown">
+      <button class="dropdown-btn">Menu ▼</button>
+      <ul class="dropdown-menu" *ngIf="menu === 'admin'">
+        <li><a href="#">Profil</a></li>
+        <li><a href="#">Paramètres</a></li>
+        <li><a href="#">Déconnexion</a></li>
+        <li><button (click)="goToDashboard()">Admin dashboard</button></li>
+      </ul>
+    </div>
+
+    <button class="btn sign-in" (click)="login()">Sign In</button>
+    <button class="btn sign-up" (click)="Signup()">Sign Up</button>
+  </div>
+</nav>
+
+<!--les cartes d'actualité -->
+
+<div class="card-grid">
   <div class="card" *ngFor="let article of articles">
     <img src="assets/images/article.png" alt="Image" class="card-img" />
     <div class="card-body">
-      <h3 class="card-title">{{article.titre}}</h3>
+      <h3 class="card-title">{{ article.titre }}</h3>
       <p class="card-text">
-        <label><b>Doi : </b>{{article.doi}}</label><br />
-        <label><b>Mots clés : </b>{{article.motsCles}}</label>
+        <label><b>Doi : </b>{{ article.doi }}</label
+        ><br />
+        <label><b>Mots clés : </b>{{ article.motsCles }}</label>
       </p>
     </div>
-    <div class="card-footer">
-      <button class="card-btn left-btn">Download PDF</button>
-      <button class="card-btn right-btn">En savoir plus</button>
+    <div class="card-footer d-flex justify-content-around">
+      <button class="card-btn left-btn mt-3">Télécharger PDF</button>
+      <button class="card-btn right-btn mt-3">En savoir plus</button>
     </div>
   </div>
 </div>
-
-
-<button (click)="goToDashboard()">Go to Admin dashboard</button>
-
-
-  
