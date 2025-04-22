@@ -50,13 +50,13 @@
             *ngIf="menu === 'admin'"
           >
             <li><a class="dropdown-item" href="#">Profil</a></li>
-            <li><a class="dropdown-item" href="#">Paramètres</a></li>
-            <li><a class="dropdown-item" href="#">Déconnexion</a></li>
             <li>
               <button class="dropdown-item" (click)="goToDashboard()">
                 Admin dashboard
               </button>
             </li>
+            <li><a class="dropdown-item" href="#">Paramètres</a></li>
+            <li><a class="dropdown-item" href="#">Déconnexion</a></li>
           </ul>
         </div>
 
@@ -64,7 +64,7 @@
         <button class="btn btn-primary ms-2" (click)="login()">Sign In</button>
         <!--<button class="btn btn-secondary ms-2" (click)="Signup()">
           Sign Up
-        </button>-->
+        </button> -->
       </div>
     </div>
   </div>
