@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../Services/api.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-index',
@@ -12,18 +13,8 @@ export class IndexComponent implements OnInit {
   menu: String = 'admin';
   articles: any;
   receivedData: any;
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private apiService: ApiService,
-    private route: ActivatedRoute
-  ) {}
-
-
-//login function
   isLoggedIn = false;
   username = '';
-//article
   isAddingArticle: boolean = false; // Controls whether the form is visible or not
 
   article = {
@@ -33,43 +24,32 @@ export class IndexComponent implements OnInit {
     pdf: null,
     domaine: ''
   };
+  
   domaines = ['Nlp', 'IA', 'Cybersecurity', 'Deeplearning'];
 
+  articleForm = new FormGroup({
+    titre: new FormControl(''),
+    doi: new FormControl(''),
+    motsCles: new FormControl(''),
+    pdf: new FormControl(null),
+    domaine: new FormControl('')
+  });
 
-  onFileChange(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.article.pdf = file;
-    }
-  }
-
-  toggleAddArticle() {
-    this.isAddingArticle = !this.isAddingArticle;
-  }
-
-  addArticle(): void {
-    if (this.article.titre && this.article.doi && this.article.pdf && this.article.domaine) {
-      // Here you can send the article to the backend (API call) to save it
-
-      // Simulate article being added
-      this.articles.push({ ...this.article });
-
-      // Clear the form after submission
-      alert('Article ajouté avec succès!');
-    } else {
-      alert('Veuillez remplir tous les champs obligatoires.');
-    }
-  }
-
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private apiService: ApiService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
+    this.route.queryParams.subscribe((params: any) => {
       this.receivedData = params;
       parseInt(this.receivedData);
       console.log(this.receivedData);
     });
 
-    this.apiService.get_Article().subscribe((response) => {
+    this.apiService.get_Article().subscribe((response: any) => {
       this.articles = response;
     });
 
@@ -81,18 +61,34 @@ export class IndexComponent implements OnInit {
     }
   }
 
-  logout(): void {
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.article.pdf = file;
+    }
+  }
 
+  toggleAddArticle(): void {
+    this.isAddingArticle = !this.isAddingArticle;
+  }
+
+  addArticle(): void {
+    this.apiService.add_article(this.articleForm.value)
+      .subscribe(res => {
+        console.log("article ajouté avec succès");
+      });
+  }
+
+  logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-
     this.isAddingArticle = false;
     // If you stored any other user info, clear it here too
     this.isLoggedIn = false;
-
     this.router.navigate(['']);
   }
-  download(article: any) {
+
+  download(article: any): void {
     const base64 = article.pdfDocument; // base64 string
     const binaryString = atob(base64); // decode base64 to binary string
 
@@ -114,17 +110,20 @@ export class IndexComponent implements OnInit {
     window.URL.revokeObjectURL(url);
   }
 
-  login() {
+  login(): void {
     this.router.navigate(['login']);
   }
-  signup() {
+
+  signup(): void {
     this.router.navigate(['signup']);
   }
   
-  Signup() {
+  Signup(): void {
     this.router.navigate(['signup']);
   }
-  goToDashboard() {
+
+  goToDashboard(): void {
     this.router.navigate(['dashboard']);
   }
 }
+
