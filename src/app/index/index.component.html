@@ -91,7 +91,7 @@
   <div class="container mt-4" style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
     <div style="background-color: #192c85; color: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); width: 100%; max-width: 600px; border: 2px solid black; margin-top: 50px;">
       <h2 class="text-center mb-4">Ajouter un article</h2>
-      <form (ngSubmit)="addArticle()">
+      <form [formGroup]="articleForm">
         <!-- Title Field -->
         <div class="mb-3">
           <label for="articleTitle" class="form-label">Titre</label>
@@ -99,6 +99,7 @@
             type="text"
             id="articleTitle"
             name="articleTitle"
+            formControlName="titre"
             class="form-control"
             required
           />
@@ -111,6 +112,7 @@
             type="text"
             id="articleDoi"
             name="articleDoi"
+            formControlName="doi"
             class="form-control"
             required
           />
@@ -123,6 +125,7 @@
             type="text"
             id="articleKeywords"
             name="articleKeywords"
+            formControlName="motsCles"
             class="form-control"
           />
         </div>
@@ -134,6 +137,7 @@
             type="file"
             id="articlePdf"
             name="articlePdf"
+            formControlName="pdf"
             class="form-control"
             (change)="onFileChange($event)"
             required
@@ -146,6 +150,7 @@
           <select
             id="articleDomaine"
             name="articleDomaine"
+            formControlName="domaine"
             class="form-select"
             required
           >
@@ -156,7 +161,7 @@
 
         <!-- Submit Button -->
         <div class="text-center">
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" (click)="addArticle()" class="btn btn-primary">
             Ajouter
           </button>
         </div>
