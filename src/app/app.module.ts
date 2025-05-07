@@ -16,6 +16,8 @@ import { UsersComponent } from './users/users.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MenuDashboardComponent } from './menu-dashboard/menu-dashboard.component';
 import { AnalysePdfComponent } from './analyse-pdf/analyse-pdf.component';
+import { ProfileComponent } from './profile/profile.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +28,7 @@ import { AnalysePdfComponent } from './analyse-pdf/analyse-pdf.component';
     DashboardComponent,
     MenuDashboardComponent,
     AnalysePdfComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

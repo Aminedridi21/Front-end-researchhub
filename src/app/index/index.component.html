@@ -51,7 +51,7 @@
             <span class="text-white">{{ username }}</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-            <li><a class="dropdown-item" href="#">Profil</a></li>
+            <li><a class="dropdown-item" (click)="goToProfile()" style="cursor: pointer;">Profil</a></li>
             <li *ngIf="menu === 'admin'">
               <a class="dropdown-item" (click)="goToDashboard()">Admin Dashboard</a>
             </li>

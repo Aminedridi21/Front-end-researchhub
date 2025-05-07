@@ -189,5 +189,9 @@ export class IndexComponent implements OnInit {
   goToDashboard(): void {
     this.router.navigate(['dashboard']);
   }
+
+  goToProfile(): void {
+    this.router.navigate(['profile']);
+  }
 }
 
