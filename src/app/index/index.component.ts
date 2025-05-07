@@ -107,23 +107,34 @@ export class IndexComponent implements OnInit {
       formData.append('pdfDocument', this.article.pdf);
     }
     this.apiService.add_article(formData)
-      .subscribe(res => {
-        console.log("article ajouté avec succès");
-        // Hide the form
-        this.isAddingArticle = false;
-        // Reset the form
-        this.articleForm.reset();
-        // Reset the article object
-        this.article = {
-          titre: '',
-          doi: '',
-          motsCles: '',
-          pdf: null,
-          domaine: ''
-        };
-        // Refresh the article list
-        this.refreshArticles();
+      .subscribe({
+        next: response => {
+          if (response.status === 201 || response.status === 200) {
+            this.handleArticleSuccess();
+          }
+        },
+        error: err => {
+          if (err.status === 201) {
+            this.handleArticleSuccess();
+          } else {
+            console.error('Error adding article:', err);
+          }
+        }
       });
+  }
+
+  handleArticleSuccess() {
+    console.log("article ajouté avec succès");
+    this.isAddingArticle = false;
+    this.articleForm.reset();
+    this.article = {
+      titre: '',
+      doi: '',
+      motsCles: '',
+      pdf: null,
+      domaine: ''
+    };
+    this.refreshArticles();
   }
 
   refreshArticles(): void {
