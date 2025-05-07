@@ -6,18 +6,29 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { UsersComponent } from './users/users.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
+import { RoleGuard } from './role.guard';
 import { AnalysePdfComponent } from './analyse-pdf/analyse-pdf.component';
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
-  { path: 'users', component: UsersComponent },
-  { path: 'PDF-Classifier', component: AnalysePdfComponent },
+  { 
+    path: 'users', 
+    component: UsersComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: 'admin' }
+  },
+  { 
+    path: 'PDF-Classifier', 
+    component: AnalysePdfComponent,
+    canActivate: [AuthGuard]
+  },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: 'researcher' }
   },
 ];
 

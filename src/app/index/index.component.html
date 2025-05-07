@@ -22,8 +22,6 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <!-- Left Side Navbar Content (You can add anything here if needed) -->
-    
       <!-- Centered Search Bar with Button -->
       <form class="d-flex mx-auto" style="max-width: 600px;">
         <input
@@ -52,14 +50,20 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
             <li><a class="dropdown-item" href="#">Profil</a></li>
-            <li *ngIf="menu === 'admin'">
-              <a class="dropdown-item" (click)="goToDashboard()">Admin Dashboard</a>
-            </li>
-            <li>
-              <a class="dropdown-item" (click)="toggleAddArticle()" >Ajouter article</a>
-            </li>
-
-
+            <ng-container *ngIf="auth.isAdmin()">
+              <li><a class="dropdown-item" (click)="goToDashboard()">Dashboard</a></li>
+              <li><a class="dropdown-item" (click)="toggleAddArticle()">Ajouter article</a></li>
+            </ng-container>
+            <ng-container *ngIf="auth.isResearcher() && !auth.isAdmin()">
+              <li><a class="dropdown-item" (click)="goToDashboard()">Dashboard</a></li>
+              <li><a class="dropdown-item" (click)="contributeArticle()">Contribuer à un article</a></li>
+              <li><a class="dropdown-item" (click)="editArticle()">Modifier un article</a></li>
+              <li><a class="dropdown-item" (click)="toggleAddArticle()">Créer un article</a></li>
+            </ng-container>
+            <ng-container *ngIf="auth.isUser() && !auth.isAdmin() && !auth.isResearcher()">
+              <!-- Menu spécifique pour un user simple -->
+              <li><a class="dropdown-item" href="#">Mes articles</a></li>
+            </ng-container>
             <li><a class="dropdown-item" href="#">Paramètres</a></li>
             <li><hr class="dropdown-divider" /></li>
             <li><a class="dropdown-item text-danger" (click)="logout()">Déconnexion</a></li>
@@ -71,13 +75,8 @@
           <button class="btn btn-outline-light me-3" (click)="login()">Sign In</button>
           <button class="btn btn-outline-light" (click)="signup()">Sign Up</button>
         </li>
-        
       </ul>
     </div>
-    
-    
-
-
   </div>
 </nav>
 
@@ -184,7 +183,11 @@
       </p>
     </div>
     <div class="card-footer d-flex justify-content-around">
-      <button class="card-btn left-btn mt-3" (click)="download(article)">Télécharger PDF</button>
+      <button class="card-btn left-btn mt-3" 
+              (click)="download(article)"
+              [title]="!isLoggedIn ? 'Connectez-vous pour télécharger' : 'Télécharger PDF'">
+        Télécharger PDF
+      </button>
       <button class="card-btn right-btn mt-3">En savoir plus</button>
     </div>
   </div>
