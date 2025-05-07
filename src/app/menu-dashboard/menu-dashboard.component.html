@@ -1,12 +1,29 @@
-<div class="sidebar"data-bs-theme="primary">
-    <div class="logo">
-      <h2>Dashboard</h2>
-    </div>
-    <ul class="menu-list"  >
-      <li><a routerLink="/dashboard" class="menu-item"><i class="fas fa-home"></i>🏠Home</a></li>
-      <li><a routerLink="/users" class="menu-item"><i class="fas fa-user"></i>👥Users</a></li>
-      <!--li><a routerLink="/" class="menu-item"><i class="fas fa-cog"></i>Listes des tickets annulées</a></li>
+<div class="sidebar" data-bs-theme="primary">
+  <div class="logo">
+    <h2>Dashboard</h2>
+  </div>
+  <ul class="menu-list">
+    <li>
+      <a routerLink="/dashboard" class="menu-item"
+        ><i class="fas fa-home"></i>🏠Home</a
+      >
+    </li>
+    <li>
+      <a routerLink="/users" class="menu-item"
+        ><i class="fas fa-user"></i>👥Users</a
+      >
+    </li>
+    <li>
+      <a routerLink="/PDF-Classifier" class="menu-item"
+        ><i class="fas fa-brain"></i>Analyseur PDF</a
+      >
+    </li>
+    <!--li><a routerLink="/" class="menu-item"><i class="fas fa-cog"></i>Listes des tickets annulées</a></li>
       <li><a routerLink="/" class="menu-item"><i class="fas fa-chart-line"></i>Listes des tickets traitées</a></li-->
-      <li><a (click)="log_out()" class="menu-item"><i class="fas fa-sign-out-alt"></i>🚪Log out</a></li>
-    </ul> 
+    <li>
+      <a (click)="log_out()" class="menu-item"
+        ><i class="fas fa-sign-out-alt"></i>🚪Log out</a
+      >
+    </li>
+  </ul>
 </div>

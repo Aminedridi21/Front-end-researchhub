@@ -1,0 +1,50 @@
+<app-menu-dashboard></app-menu-dashboard>
+<div class="container mx-auto mt-5">
+  <div class="card shadow rounded p-4 border-primary">
+    <h2 class="text-center text-primary mb-4">🧠 Analyseur de PDF IA</h2>
+
+    <!-- One-line form with wider input -->
+    <div class="row g-2 justify-content-center align-items-center">
+      <div class="col-md-7">
+        <input
+          type="file"
+          class="form-control border-primary"
+          (change)="onFileSelected($event)"
+          accept="application/pdf"
+        />
+      </div>
+
+      <div class="col-auto">
+        <button
+          class="btn btn-primary"
+          type="button"
+          (click)="uploadFile()"
+          [disabled]="!selectedFile"
+        >
+          Analyser
+        </button>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div *ngIf="response" class="alert alert-primary mt-4">
+      <h4 class="alert-heading">📌 Sujet détecté :</h4>
+      <p class="fs-5 fw-semibold">{{ response.topic }}</p>
+
+      <h5 class="mt-3">Mots-clés :</h5>
+      <div class="row">
+        <div
+          class="col-md-4"
+          *ngFor="let keyword of response.keywords; let i = index"
+        >
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item">🔹 {{ keyword }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="error" class="alert alert-danger mt-4">⚠️ {{ error }}</div>
+  </div>
+</div>

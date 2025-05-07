@@ -1,50 +1,192 @@
+<!--menu admin ou chercheur-->
 
-      <!--menu admin ou chercheur-->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #003366">
+  <div class="container-fluid">
+    <!-- Logo -->
+    <a class="navbar-brand d-flex align-items-center gap-2" href="">
+      <img src="/assets/images/logo.png" alt="Logo" class="logo" style="height: 40px" />
+      <span class="fw-bold text-white">Research hub </span>
+    </a>
+
+    <!-- Navbar Toggler for Mobile -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Left Side Navbar Content (You can add anything here if needed) -->
     
-        
-      <nav class="navbar">
-        <div class="navbar-left">
-          <img src="/assets/logo.png" alt="Logo" class="logo" />
-          <input type="text" placeholder="Search..." class="search-bar" />
-        </div>
-      
-        <div class="navbar-right">
-          <div class="dropdown" >
-            <button class="dropdown-btn">Menu ▼</button>
-            <ul class="dropdown-menu" *ngIf="menu === 'admin'">
-              <li><a href="#">Profil</a></li>
-              <li><a href="#">Paramètres</a></li>
-              <li><a href="#">Déconnexion</a></li>
-            </ul>
-          </div>
-      
-          <button class="btn sign-in" (click)="login()">Sign In</button>
-          <button class="btn sign-up" (click)="Signup()">Sign Up</button>
-        </div>
-      </nav>
-      
- <!--les cartes d'actualité -->
- 
+      <!-- Centered Search Bar with Button -->
+      <form class="d-flex mx-auto" style="max-width: 600px;">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search..."
+          aria-label="Search"
+        />
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+    
+      <!-- Right-side Buttons and User Menu -->
+      <ul class="navbar-nav align-items-center gap-2">
+        <!-- User dropdown (only if logged in) -->
+        <li class="nav-item dropdown" *ngIf="isLoggedIn">
+          <a
+            class="nav-link dropdown-toggle d-flex align-items-center gap-2"
+            href="#"
+            id="userDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fa fa-user-circle fa-lg text-white"></i>
+            <span class="text-white">{{ username }}</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="#">Profil</a></li>
+            <li *ngIf="menu === 'admin'">
+              <a class="dropdown-item" (click)="goToDashboard()">Admin Dashboard</a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="toggleAddArticle()" >Ajouter article</a>
+            </li>
 
- <div class="card-grid">
-  <div class="card" *ngFor="let article of articles">
-    <img src="assets/images/article.png" alt="Image" class="card-img" />
-    <div class="card-body">
-      <h3 class="card-title">{{article.titre}}</h3>
-      <p class="card-text">
-        <label><b>Doi : </b>{{article.doi}}</label><br />
-        <label><b>Mots clés : </b>{{article.motsCles}}</label>
-      </p>
+
+            <li><a class="dropdown-item" href="#">Paramètres</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item text-danger" (click)="logout()">Déconnexion</a></li>
+          </ul>
+        </li>
+    
+        <!-- Sign In Button (only if not logged in) -->
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <button class="btn btn-outline-light me-3" (click)="login()">Sign In</button>
+          <button class="btn btn-outline-light" (click)="signup()">Sign Up</button>
+        </li>
+        
+      </ul>
     </div>
-    <div class="card-footer">
-      <button class="card-btn left-btn">Download PDF</button>
-      <button class="card-btn right-btn">En savoir plus</button>
+    
+    
+
+
+  </div>
+</nav>
+
+<!-- Navbar remains the same -->
+
+
+
+<!-- Conditionally show either the form or the article cards -->
+<div *ngIf="isAddingArticle">
+  <!-- Add Article Form -->
+  <div class="container mt-4" style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+    <div style="background-color: #192c85; color: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); width: 100%; max-width: 600px; border: 2px solid black; margin-top: 50px;">
+      <h2 class="text-center mb-4">Ajouter un article</h2>
+      <form [formGroup]="articleForm">
+        <!-- Title Field -->
+        <div class="mb-3">
+          <label for="articleTitle" class="form-label">Titre</label>
+          <input
+            type="text"
+            id="articleTitle"
+            name="articleTitle"
+            formControlName="titre"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <!-- DOI Field -->
+        <div class="mb-3">
+          <label for="articleDoi" class="form-label">DOI</label>
+          <input
+            type="text"
+            id="articleDoi"
+            name="articleDoi"
+            formControlName="doi"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <!-- Keywords Field -->
+        <div class="mb-3">
+          <label for="articleKeywords" class="form-label">Mots-clés</label>
+          <input
+            type="text"
+            id="articleKeywords"
+            name="articleKeywords"
+            formControlName="motsCles"
+            class="form-control"
+          />
+        </div>
+
+        <!-- PDF Field -->
+        <div class="mb-3">
+          <label for="articlePdf" class="form-label">PDF</label>
+          <input
+            type="file"
+            id="articlePdf"
+            name="articlePdf"
+            class="form-control"
+            (change)="onFileChange($event)"
+            required
+          />
+        </div>
+
+        <!-- Domain Field (select dropdown) -->
+        <div class="mb-3">
+          <label for="articleDomaine" class="form-label">Domaine</label>
+          <select
+            id="articleDomaine"
+            name="articleDomaine"
+            formControlName="domaine"
+            class="form-select"
+            required
+          >
+            <option value="">Select a Domaine</option>
+            <option *ngFor="let domaine of domains" [value]="domaine.id">{{ domaine.nomDomaine }}</option>
+          </select>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+          <button type="submit" (click)="addArticle()" class="btn btn-primary">
+            Ajouter
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
 
 
-<button (click)="goToDashboard()">Go to Admin dashboard</button>
 
 
-  
+<!-- Show Article Cards -->
+<div *ngIf="!isAddingArticle" class="card-grid">
+  <div class="card" *ngFor="let article of articles">
+    <img src="assets/images/article.png" alt="Image" class="card-img" />
+    <div class="card-body">
+      <h3 class="card-title">{{ article.titre }}</h3>
+      <p class="card-text">
+        <label><b>Doi : </b>{{ article.doi }}</label><br />
+        <label><b>Mots clés : </b>{{ article.motsCles }}</label>
+      </p>
+    </div>
+    <div class="card-footer d-flex justify-content-around">
+      <button class="card-btn left-btn mt-3" (click)="download(article)">Télécharger PDF</button>
+      <button class="card-btn right-btn mt-3">En savoir plus</button>
+    </div>
+  </div>
+</div>
+
