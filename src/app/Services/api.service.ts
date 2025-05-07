@@ -25,10 +25,10 @@ export class ApiService {
   
 
   add_article(article:any){
-   
-       return this.http.post<any>("http://localhost:8090/api/articles",article.value)
-     
-   }
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Authorization': `Bearer ${token}`});
+    return this.http.post<any>("http://localhost:8090/api/articles", article, {headers})
+  }
 
 
 

@@ -137,7 +137,6 @@
             type="file"
             id="articlePdf"
             name="articlePdf"
-            formControlName="pdf"
             class="form-control"
             (change)="onFileChange($event)"
             required
@@ -155,7 +154,7 @@
             required
           >
             <option value="">Select a Domaine</option>
-            <option *ngFor="let domaine of domaines" [value]="domaine">{{ domaine }}</option>
+            <option *ngFor="let domaine of domains" [value]="domaine.id">{{ domaine.nomDomaine }}</option>
           </select>
         </div>
 

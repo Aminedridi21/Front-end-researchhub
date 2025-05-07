@@ -25,14 +25,14 @@ export class IndexComponent implements OnInit {
     domaine: ''
   };
   
-  domaines = ['Nlp', 'IA', 'Cybersecurity', 'Deeplearning'];
+  domains: any[] = [];
 
   articleForm = new FormGroup({
     titre: new FormControl(''),
     doi: new FormControl(''),
     motsCles: new FormControl(''),
     pdf: new FormControl(null),
-    domaine: new FormControl('')
+    domaine: new FormControl('') // This will store the domain ID
   });
 
   constructor(
@@ -53,7 +53,22 @@ export class IndexComponent implements OnInit {
       this.articles = response;
     });
 
+    // Fetch domains from backend with Authorization header and debug log
     const token = localStorage.getItem('token');
+    console.log('Token:', token); // Debug: check if token is present and valid
+    this.http.get<any[]>('http://localhost:8090/api/domaines', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).subscribe({
+      next: data => {
+        this.domains = data;
+      },
+      error: err => {
+        console.error('Error fetching domains:', err);
+      }
+    });
+
     if (token) {
       this.isLoggedIn = true;
       const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -64,19 +79,57 @@ export class IndexComponent implements OnInit {
   onFileChange(event: any): void {
     const file = event.target.files[0];
     if (file) {
+      // Don't try to set the file value directly to the form control
+      // Store it separately for form submission
       this.article.pdf = file;
     }
   }
 
   toggleAddArticle(): void {
     this.isAddingArticle = !this.isAddingArticle;
+    if (!this.isAddingArticle) {
+      // Reset form when closing
+      this.articleForm.reset();
+    }
   }
 
   addArticle(): void {
-    this.apiService.add_article(this.articleForm.value)
+    const formValue = this.articleForm.value;
+    const articleData = {
+      titre: formValue.titre,
+      doi: formValue.doi,
+      motsCles: formValue.motsCles,
+      domainId: formValue.domaine // This is now the ID
+    };
+    const formData = new FormData();
+    formData.append('articleData', JSON.stringify(articleData));
+    if (this.article.pdf) {
+      formData.append('pdfDocument', this.article.pdf);
+    }
+    this.apiService.add_article(formData)
       .subscribe(res => {
         console.log("article ajouté avec succès");
+        // Hide the form
+        this.isAddingArticle = false;
+        // Reset the form
+        this.articleForm.reset();
+        // Reset the article object
+        this.article = {
+          titre: '',
+          doi: '',
+          motsCles: '',
+          pdf: null,
+          domaine: ''
+        };
+        // Refresh the article list
+        this.refreshArticles();
       });
+  }
+
+  refreshArticles(): void {
+    this.apiService.get_Article().subscribe((response: any) => {
+      this.articles = response;
+    });
   }
 
   logout(): void {
