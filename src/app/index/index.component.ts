@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../Services/api.service';
+import { AuthentificationService } from '../Services/authentification.service';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -39,7 +40,8 @@ export class IndexComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private apiService: ApiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public auth: AuthentificationService
   ) {}
 
   ngOnInit(): void {
@@ -72,7 +74,7 @@ export class IndexComponent implements OnInit {
     if (token) {
       this.isLoggedIn = true;
       const user = JSON.parse(localStorage.getItem('user') || '{}');
-      this.username = user.firstName + user.lastName;
+      this.username = user.firstName + ' ' + user.lastName;
     }
   }
 
@@ -144,22 +146,28 @@ export class IndexComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    this.auth.log_out();
     this.isAddingArticle = false;
-    // If you stored any other user info, clear it here too
     this.isLoggedIn = false;
-    this.router.navigate(['']);
   }
 
   download(article: any): void {
-    const base64 = article.pdfDocument; // base64 string
-    const binaryString = atob(base64); // decode base64 to binary string
+    if (!this.auth.loggedIn()) {
+      this.router.navigate(['/login']);
+      return;
+    }
 
+    const base64 = article.pdfDocument;
+    if (!base64) {
+      alert('Le PDF n\'est pas disponible');
+      return;
+    }
+
+    const binaryString = atob(base64);
     const len = binaryString.length;
     const bytes = new Uint8Array(len);
     for (let i = 0; i < len; i++) {
-      bytes[i] = binaryString.charCodeAt(i); // convert each char to byte
+      bytes[i] = binaryString.charCodeAt(i);
     }
 
     const blob = new Blob([bytes], {
@@ -190,8 +198,25 @@ export class IndexComponent implements OnInit {
     this.router.navigate(['dashboard']);
   }
 
+  contributeArticle(): void {
+    // Placeholder: ouvrir une modale ou naviguer vers la page de contribution
+    alert('Fonctionnalité à implémenter : Contribuer à un article');
+  }
+
+  editArticle(): void {
+    // Placeholder: ouvrir une modale ou naviguer vers la page de modification
+    alert('Fonctionnalité à implémenter : Modifier un article');
+  }
+
   goToProfile(): void {
     this.router.navigate(['profile']);
   }
+
+  viewArticleDetails(article: any): void {
+    // Show article details in an alert for now
+    alert(`Détails de l'article: ${article.titre}\nDOI: ${article.doi}\nMots clés: ${article.motsCles}`);
+    // TODO: Implement a proper article details page in the future
+  }
+
 }
 
