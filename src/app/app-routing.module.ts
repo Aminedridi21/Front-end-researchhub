@@ -8,6 +8,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
 import { RoleGuard } from './role.guard';
 import { AnalysePdfComponent } from './analyse-pdf/analyse-pdf.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
@@ -29,6 +30,11 @@ const routes: Routes = [
     component: DashboardComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { role: 'researcher' }
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
   },
 ];
 
