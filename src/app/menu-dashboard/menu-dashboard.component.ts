@@ -7,11 +7,11 @@ import { AuthentificationService } from '../Services/authentification.service';
   styleUrls: ['./menu-dashboard.component.css']
 })
 export class MenuDashboardComponent implements OnInit {
-
-  constructor(private auth:AuthentificationService) { }
+  constructor(public auth: AuthentificationService) { }
 
   ngOnInit(): void {
   }
+
   log_out(){
     this.auth.log_out();
     console.log('User logged out');
