@@ -49,6 +49,7 @@
             <span class="text-white">{{ username }}</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+
             <li><a class="dropdown-item" (click)="goToProfile()">Profil</a></li>
             <ng-container *ngIf="auth.isAdmin()">
               <li><a class="dropdown-item" (click)="goToDashboard()">Dashboard</a></li>
@@ -64,6 +65,11 @@
               <!-- Menu spécifique pour un user simple -->
               <li><a class="dropdown-item" href="#">Mes articles</a></li>
             </ng-container>
+
+          
+
+
+
             <li><a class="dropdown-item" href="#">Paramètres</a></li>
             <li><hr class="dropdown-divider" /></li>
             <li><a class="dropdown-item text-danger" (click)="logout()">Déconnexion</a></li>

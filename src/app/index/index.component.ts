@@ -217,5 +217,6 @@ export class IndexComponent implements OnInit {
     alert(`Détails de l'article: ${article.titre}\nDOI: ${article.doi}\nMots clés: ${article.motsCles}`);
     // TODO: Implement a proper article details page in the future
   }
+
 }
 
