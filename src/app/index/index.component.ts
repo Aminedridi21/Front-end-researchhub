@@ -207,5 +207,15 @@ export class IndexComponent implements OnInit {
     // Placeholder: ouvrir une modale ou naviguer vers la page de modification
     alert('Fonctionnalité à implémenter : Modifier un article');
   }
+
+  goToProfile(): void {
+    this.router.navigate(['profile']);
+  }
+
+  viewArticleDetails(article: any): void {
+    // Show article details in an alert for now
+    alert(`Détails de l'article: ${article.titre}\nDOI: ${article.doi}\nMots clés: ${article.motsCles}`);
+    // TODO: Implement a proper article details page in the future
+  }
 }
 

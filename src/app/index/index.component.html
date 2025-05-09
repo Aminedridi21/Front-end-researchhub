@@ -49,7 +49,7 @@
             <span class="text-white">{{ username }}</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-            <li><a class="dropdown-item" href="#">Profil</a></li>
+            <li><a class="dropdown-item" (click)="goToProfile()">Profil</a></li>
             <ng-container *ngIf="auth.isAdmin()">
               <li><a class="dropdown-item" (click)="goToDashboard()">Dashboard</a></li>
               <li><a class="dropdown-item" (click)="toggleAddArticle()">Ajouter article</a></li>

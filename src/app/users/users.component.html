@@ -1,37 +1,41 @@
 <app-menu-dashboard></app-menu-dashboard>
-<div class="table_div">
-    <h2 class="title">Listes des utilisateurs</h2>
-    <table  class="table">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>firstName</th>
-                <th>lastName</th>
-                <th>email</th>
-                
-                <th>employmentDate</th>
-                <th>originalEstablishment</th> 
-                <th>lastDiploma</th>
-                <th>grade</th>
-                <th>role</th>
-                <th>actions</th>
-            </tr>
-    </thead>
-        <tbody>
-            <tr *ngFor="let user of users">
-                <td>{{user.id}}</td>
-                <td>{{user.firstName}}</td>
-                <td>{{user.lastName}}</td>
-                <td>{{user.email}}</td>
-                <td>{{user.employmentDate}}</td>
-                <td>{{user.originalEstablishment}}</td>
-                <td>{{user.lastDiploma}}</td>
-                <td>{{user.grade}}</td>
-                <td>{{user.role}}</td>
-                <td>
-                    <button  class="btn">Modifier</button>
-                </td>
+<div class="users-container">
+    <h2 class="section-title">Listes des utilisateurs</h2>
+    
+    <div class="table-responsive">
+        <table class="modern-table">
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Employé depuis</th>
+                    <th>Établissement</th>
+                    <th>Diplôme</th>
+                    <th>Grade</th>
+                    <th>Role</th>
+                    <th>Actions</th>
                 </tr>
-        </tbody>   
-    </table>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td class="user-avatar-cell">
+                        <img src="https://ui-avatars.com/api/?name={{user.firstName}}+{{user.lastName}}&background=192c85&color=fff&size=128" alt="User Avatar">
+                    </td>
+                    <td>{{user.firstName}} {{user.lastName}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.employmentDate}}</td>
+                    <td>{{user.originalEstablishment}}</td>
+                    <td>{{user.lastDiploma}}</td>
+                    <td>{{user.grade}}</td>
+                    <td><span class="role-badge">{{user.role}}</span></td>
+                    <td>
+                        <button class="edit-btn" (click)="modifyUser(user.id)">
+                            <i class="fas fa-edit"></i> Modifier
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
