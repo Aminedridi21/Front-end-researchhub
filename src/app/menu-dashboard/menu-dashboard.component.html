@@ -14,6 +14,11 @@
       >
     </li>
     <li *ngIf="auth.canManageArticles()">
+      <a routerLink="/associate-article" class="menu-item">
+        <i class="fas fa-link"></i>🔗Associer Article à un chercheur 
+      </a>
+    </li>
+    <li *ngIf="auth.canManageArticles()">
       <a routerLink="/PDF-Classifier" class="menu-item"
         ><i class="fas fa-brain"></i>Analyseur PDF</a
       >

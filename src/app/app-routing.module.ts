@@ -8,6 +8,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
 import { RoleGuard } from './role.guard';
 import { AnalysePdfComponent } from './analyse-pdf/analyse-pdf.component';
+import { ArticleDetailComponent } from './article-detail/article-detail.component';
+import { EditArticleComponent } from './edit-article/edit-article.component';
+import { AssociateArticleComponent } from './associate-article/associate-article.component';
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
@@ -30,6 +33,20 @@ const routes: Routes = [
     canActivate: [AuthGuard, RoleGuard],
     data: { role: 'researcher' }
   },
+  {
+    path: 'article/:id',
+    component: ArticleDetailComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: 'associate-article',
+    component: AssociateArticleComponent,
+    canActivate :[AuthGuard]},
+  {
+    path: 'edit-article/:id',
+    component: EditArticleComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: 'RESEARCHER' }
+  }
 ];
 
 @NgModule({

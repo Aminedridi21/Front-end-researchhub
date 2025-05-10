@@ -23,15 +23,18 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <!-- Centered Search Bar with Button -->
-      <form class="d-flex mx-auto" style="max-width: 600px;">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search..."
-          aria-label="Search"
-        />
-        <button class="btn btn-primary" type="submit">Search</button>
-      </form>
+      <form class="d-flex mx-auto" style="max-width: 600px;" (ngSubmit)="onSearch()">
+  <input
+    class="form-control me-2"
+    type="search"
+    placeholder="Search..."
+    [(ngModel)]="searchKeyword"
+    name="search"
+    required
+  />
+  <button class="btn btn-primary" type="submit">Search</button>
+</form>
+
     
       <!-- Right-side Buttons and User Menu -->
       <ul class="navbar-nav align-items-center gap-2">
@@ -55,14 +58,14 @@
               <li><a class="dropdown-item" (click)="toggleAddArticle()">Ajouter article</a></li>
             </ng-container>
             <ng-container *ngIf="auth.isResearcher() && !auth.isAdmin()">
-              <li><a class="dropdown-item" (click)="goToDashboard()">Dashboard</a></li>
+              <!--li><a class="dropdown-item" (click)="goToDashboard()">Dashboard</a></li>
               <li><a class="dropdown-item" (click)="contributeArticle()">Contribuer à un article</a></li>
-              <li><a class="dropdown-item" (click)="editArticle()">Modifier un article</a></li>
+              <li><a class="dropdown-item" (click)="editArticle()">Modifier un article</a></li-->
               <li><a class="dropdown-item" (click)="toggleAddArticle()">Créer un article</a></li>
             </ng-container>
             <ng-container *ngIf="auth.isUser() && !auth.isAdmin() && !auth.isResearcher()">
               <!-- Menu spécifique pour un user simple -->
-              <li><a class="dropdown-item" href="#">Mes articles</a></li>
+              <!--li><a class="dropdown-item" href="#">Mes articles</a></li-->
             </ng-container>
             <li><a class="dropdown-item" href="#">Paramètres</a></li>
             <li><hr class="dropdown-divider" /></li>
@@ -173,7 +176,7 @@
 
 <!-- Show Article Cards -->
 <div *ngIf="!isAddingArticle" class="card-grid">
-  <div class="card" *ngFor="let article of articles">
+  <div class="card" *ngFor="let article of (searchPerformed ? searchResults : articles)">
     <img src="assets/images/article.png" alt="Image" class="card-img" />
     <div class="card-body">
       <h3 class="card-title">{{ article.titre }}</h3>
@@ -188,7 +191,7 @@
               [title]="!isLoggedIn ? 'Connectez-vous pour télécharger' : 'Télécharger PDF'">
         Télécharger PDF
       </button>
-      <button class="card-btn right-btn mt-3">En savoir plus</button>
+      <button class="card-btn right-btn mt-3" [routerLink]="['/article', article.id]">En savoir plus</button>
     </div>
   </div>
 </div>

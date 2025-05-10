@@ -11,6 +11,9 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./index.component.css'],
 })
 export class IndexComponent implements OnInit {
+  searchPerformed = false;
+  searchKeyword: string = '';
+  searchResults: any[] = [];
   menu: String = 'admin';
   articles: any;
   receivedData: any;
@@ -51,6 +54,8 @@ export class IndexComponent implements OnInit {
       console.log(this.receivedData);
     });
 
+    
+
     this.apiService.get_Article().subscribe((response: any) => {
       this.articles = response;
     });
@@ -77,6 +82,26 @@ export class IndexComponent implements OnInit {
       this.username = user.firstName + ' ' + user.lastName;
     }
   }
+
+  onSearch() {
+  if (!this.searchKeyword.trim()) {
+    this.searchResults = [];
+    this.searchPerformed = false;
+    return;
+  }
+
+  this.apiService.searchArticles(this.searchKeyword).subscribe(
+    (results) => {
+      this.searchResults = results;
+      this.searchPerformed = true;
+    },
+    (error) => {
+      console.error('Erreur lors de la recherche :', error);
+      this.searchResults = [];
+      this.searchPerformed = true;
+    }
+  );
+}
 
   onFileChange(event: any): void {
     const file = event.target.files[0];

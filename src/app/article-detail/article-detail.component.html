@@ -1,0 +1,26 @@
+<div class="container mt-4">
+  <div *ngIf="loading" class="alert alert-info">Chargement de l'article...</div>
+  <div *ngIf="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
+  <div *ngIf="!loading && !errorMsg && article">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">{{ article?.titre }}</h2>
+        <div class="article-meta mb-3">
+          <span class="text-muted">DOI : {{ article?.doi }}</span>
+          <span class="text-muted ms-3">Domaine : {{ article?.domain?.nomDomaine }}</span>
+        </div>
+        <div class="article-content">
+          <strong>Mots clés :</strong> {{ article?.motsCles }}
+        </div>
+        <div class="article-content mt-2">
+          <strong>Document :</strong> {{ article?.documentName }}
+          <button class="btn btn-outline-secondary btn-sm ms-2" (click)="downloadPdf()">Télécharger le PDF</button>
+        </div>
+        <div class="article-actions mt-4">
+          <button class="btn btn-primary me-2" (click)="editArticle()">Modifier</button>
+          <button class="btn btn-danger" (click)="deleteArticle()">Supprimer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
