@@ -34,6 +34,11 @@ const routes: Routes = [
     canActivate: [AuthGuard, RoleGuard],
     data: { role: 'researcher' }
   },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
+  },
   { path: 'profile', component: ProfileComponent },
   {
     path: 'article/:id',
