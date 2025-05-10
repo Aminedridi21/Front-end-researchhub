@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../Services/api.service';
+import { AuthentificationService } from '../Services/authentification.service';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -10,6 +11,9 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./index.component.css'],
 })
 export class IndexComponent implements OnInit {
+  searchPerformed = false;
+  searchKeyword: string = '';
+  searchResults: any[] = [];
   menu: String = 'admin';
   articles: any;
   receivedData: any;
@@ -39,7 +43,8 @@ export class IndexComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private apiService: ApiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public auth: AuthentificationService
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +53,8 @@ export class IndexComponent implements OnInit {
       parseInt(this.receivedData);
       console.log(this.receivedData);
     });
+
+    
 
     this.apiService.get_Article().subscribe((response: any) => {
       this.articles = response;
@@ -72,9 +79,29 @@ export class IndexComponent implements OnInit {
     if (token) {
       this.isLoggedIn = true;
       const user = JSON.parse(localStorage.getItem('user') || '{}');
-      this.username = user.firstName + user.lastName;
+      this.username = user.firstName + ' ' + user.lastName;
     }
   }
+
+  onSearch() {
+  if (!this.searchKeyword.trim()) {
+    this.searchResults = [];
+    this.searchPerformed = false;
+    return;
+  }
+
+  this.apiService.searchArticles(this.searchKeyword).subscribe(
+    (results) => {
+      this.searchResults = results;
+      this.searchPerformed = true;
+    },
+    (error) => {
+      console.error('Erreur lors de la recherche :', error);
+      this.searchResults = [];
+      this.searchPerformed = true;
+    }
+  );
+}
 
   onFileChange(event: any): void {
     const file = event.target.files[0];
@@ -144,22 +171,28 @@ export class IndexComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    this.auth.log_out();
     this.isAddingArticle = false;
-    // If you stored any other user info, clear it here too
     this.isLoggedIn = false;
-    this.router.navigate(['']);
   }
 
   download(article: any): void {
-    const base64 = article.pdfDocument; // base64 string
-    const binaryString = atob(base64); // decode base64 to binary string
+    if (!this.auth.loggedIn()) {
+      this.router.navigate(['/login']);
+      return;
+    }
 
+    const base64 = article.pdfDocument;
+    if (!base64) {
+      alert('Le PDF n\'est pas disponible');
+      return;
+    }
+
+    const binaryString = atob(base64);
     const len = binaryString.length;
     const bytes = new Uint8Array(len);
     for (let i = 0; i < len; i++) {
-      bytes[i] = binaryString.charCodeAt(i); // convert each char to byte
+      bytes[i] = binaryString.charCodeAt(i);
     }
 
     const blob = new Blob([bytes], {

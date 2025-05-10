@@ -8,12 +8,17 @@
         ><i class="fas fa-home"></i>🏠Home</a
       >
     </li>
-    <li>
+    <li *ngIf="auth.canManageUsers()">
       <a routerLink="/users" class="menu-item"
         ><i class="fas fa-user"></i>👥Users</a
       >
     </li>
-    <li>
+    <li *ngIf="auth.canManageArticles()">
+      <a routerLink="/associate-article" class="menu-item">
+        <i class="fas fa-link"></i>🔗Associer Article à un chercheur 
+      </a>
+    </li>
+    <li *ngIf="auth.canManageArticles()">
       <a routerLink="/PDF-Classifier" class="menu-item"
         ><i class="fas fa-brain"></i>Analyseur PDF</a
       >

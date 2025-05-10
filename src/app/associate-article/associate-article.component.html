@@ -1,0 +1,21 @@
+<app-menu-dashboard></app-menu-dashboard>
+<div class="associate-container">
+  <div class="form-card">
+    <h2 class="form-title">Associer un Article à un Chercheur</h2>
+    <form [formGroup]="associateForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Date de contribution</label>
+        <input type="date" formControlName="date" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label>Identifiant du Chercheur</label>
+        <input type="number" formControlName="id_user" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label>Identifiant de l'Article</label>
+        <input type="number" formControlName="id_article" class="form-control" required />
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Associer</button>
+    </form>
+  </div>
+</div>
